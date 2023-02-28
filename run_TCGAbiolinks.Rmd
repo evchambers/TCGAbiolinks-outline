@@ -1,0 +1,65 @@
+---
+title: "TCGAbiolinks"
+author: 
+ - Emily Chambers
+ - Sheffield Bioinformatics Core
+date: "`r Sys.Date()`"
+output:
+ html_document:
+  toc: true
+  toc_float: true
+  toc_collapsed: true
+  toc_depth: 2
+  number_sections: true
+  css: stylesheets/styles.css
+ pdf_document:
+    toc: true
+    toc_depth: 2
+urlcolor: blue
+linkcolor: blue
+    
+    
+---
+<img src="images/logo-sm.png" style="position:absolute;top:40px;right:10px;" width="200" />
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = F, echo=F, warning=F)
+```
+
+```{r,include = FALSE }
+library(tidyverse, quietly=T)
+library(here, quietly=T)
+library(janitor, quietly=T)
+library(TCGAbiolinks)
+library(DT)
+
+
+#library(renv)
+
+```
+
+```{r}
+#renv::init()
+#renv::snapshot()
+```
+
+# Try skeleton query
+```{r}
+
+query <- GDCquery(
+    project = c("TCGA-GBM", "TCGA-LGG"),
+    data.category = "DNA Methylation",
+    legacy = FALSE,
+    platform = c("Illumina Human Methylation 450"),
+    sample.type = "Recurrent Tumor"
+)
+
+datatable(
+    getResults(query), 
+    filter = 'top',
+    options = list(scrollX = TRUE, keys = TRUE, pageLength = 5), 
+    rownames = FALSE
+)
+
+```
+
